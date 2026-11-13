@@ -10,12 +10,9 @@ and the payload together are 4,085 bytes.
 
 ## Engine (v15: v12 + qu fix, GB 150k)
 
-v15 is v12 with exactly two changes: the quiescence line moved before
-`mk(m)` in `sc()` (enables LMR r=1 and killer moves in quiescence, both
-silently dead in v12), and the node budget lowered 200,000 -> 150,000 so
-the trial finishes well inside the 3,600 s wall (v12 measured 1,633 Elo
-but its 3,501 s wall timed out on the server). House trial: 1,497 Elo
-(7W/5D/4L), wall 2,486 s, max think 4,944 ms.
+v15 = v12 + qu fix (LMR r=1 + killers in quiescence) + budget 200k ->
+150k, so the trial finishes inside the wall. Trial: 1,497 Elo (7W/5D/4L),
+wall 2,486 s, max think 4,944 ms (v12 timed out at 3,501 s).
 
 ## Engine history (v11, from scratch)
 
@@ -51,11 +48,7 @@ but its 3,501 s wall timed out on the server). House trial: 1,497 Elo
 - Value-based move ordering instead of MVV-LVA.
 - Fixed-depth bench (identical positions): depth-5 mean 85,705 nodes
   (v10h) -> 44,485 nodes (v11); depth-6 mean 460,842 -> 153,939.
-  v11 uses roughly 2x fewer nodes at depth 5 and 3x fewer at depth 6,
-  so at the same 150,000-node budget it searches about 2-3 extra plies
-  deeper than v10h.
-- Bishop-pair bonus and king-centralisation term were removed to fit the
-  byte cap; node counts were unchanged (depth-6 mean 151,574 -> 153,939).
+  At the same budget it searches 2-3 extra plies deeper than v10h.
 
 ## Files
 
