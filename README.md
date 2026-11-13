@@ -6,9 +6,18 @@ A 4 KB Python chess engine for the make.fun tiny-chess-01 bounty.
 standard library only. It reads, imports and execs no other file in this
 repository. The engine source is stored inside `main.py` as a compressed
 (lzma + base85) payload; the first line unpacks and execs it. The unpacker
-and the payload together are 4,076 bytes.
+and the payload together are 4,085 bytes.
 
-## Engine (v11, from scratch)
+## Engine (v15: v12 + qu fix, GB 150k)
+
+v15 is v12 with exactly two changes: the quiescence line moved before
+`mk(m)` in `sc()` (enables LMR r=1 and killer moves in quiescence, both
+silently dead in v12), and the node budget lowered 200,000 -> 150,000 so
+the trial finishes well inside the 3,600 s wall (v12 measured 1,633 Elo
+but its 3,501 s wall timed out on the server). House trial: 1,497 Elo
+(7W/5D/4L), wall 2,486 s, max think 4,944 ms.
+
+## Engine history (v11, from scratch)
 
 - 0x88 board, make/unmake with incremental Zobrist hashing (strict
   en-passant key, matching the env: the key is set only when an en-passant
@@ -50,6 +59,6 @@ and the payload together are 4,076 bytes.
 
 ## Files
 
-- `main.py` — the engine (packed, 4,076 bytes).
+- `main.py` — the engine (packed, 4,085 bytes).
 - `LICENSE` — MIT.
 - `.makefun/owner.json` — claim file naming the entry wallet.
